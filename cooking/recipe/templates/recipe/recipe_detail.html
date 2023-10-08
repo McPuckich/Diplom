@@ -1,0 +1,60 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<div class="recipe_detail">
+    <h1>{{ recipe_d.title }}</h1>
+    <img src="{{ recipe_d.main_image.url }}" alt="">
+    <a href="{% url 'users_details' recipe_d.owner.id %}"><h3>Автор: {{ recipe_d.owner.name }}</h3></a>
+    <div class="mark">Like: {{ recipe_d.like }} <br> Mark: {{ recipe_d.mark }}</div>
+
+    <div class="ingredient">
+        <p>Ингредиенты:</p>
+        <p>{{ recipe_d.ingredients|linebreaksbr }}</p>
+    </div>
+
+    <div class="des">
+        {% if recipe_d.description %}
+        <p>{{ recipe_d.description }}</p>
+        {% endif %}
+    </div>
+    <div class="steps">
+        <p>Шаги:</p>
+        <p>{{ recipe_d.steps|linebreaksbr }}</p>
+    </div>
+</div>
+
+{% if request.user.profile.id in recipe_d.commentator %}
+<p class="com_er">Вы уже оставили свой комментарий</p>
+{% elif request.user.profile == recipe_d.owner %}
+<p class="com_er">Нельзя коментировать свой рецепт</p>
+{% elif request.user.is_authenticated %}
+<form class="your_comment" action="{% url 'recipe_detail' recipe_d.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% for com in comment %}
+    <div class="comment_field">
+        <label>{{ com.label }}:</label>
+        {{ com }}<br>
+    </div>
+    {% endfor %}
+    <input class="sub_com" type="submit" value="Оставить">
+</form>
+{% else %}
+    <p><a href="{% url 'login_user' %}">Войдите</a> в аккаунт для того чтобы оставить отзыв</p>
+{% endif %}
+<div class="comments">
+    <h2>Комментарии:</h2>
+    {% for com in recipe_d.comment_set.all %}
+    {% if com.comment %}
+    <div class="comment">
+        <img src="{{ com.owner.profile_image.url }}" alt="">
+        <a href="{% url 'users_details' com.owner.id %}">{{ com.owner.name }}</a>
+        <p>{{ com.comment|linebreaksbr }}</p>
+        <p>Mark: {{ com.mark }}</p>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock content %}

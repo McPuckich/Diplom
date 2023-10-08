@@ -1,0 +1,9 @@
+{% extends 'recipe/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Главная</h1>
+{% for rec in recipies %}
+<h1>{{ rec.title }}</h1>
+{% endfor %}
+{% endblock content %}

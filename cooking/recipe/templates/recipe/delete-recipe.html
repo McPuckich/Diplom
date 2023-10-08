@@ -1,0 +1,12 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+<div class="del_rec">
+    <form action="" method="post">
+        {% csrf_token %}
+        <h3>Вы точно хотите удалить рецепт <b>'{{ object }}'</b>?</h3>
+        <a href="{% url 'profile' %}">Отмена</a>
+        <input type="submit" value="Удалить">
+    </form>
+</div>
+{% endblock content %}

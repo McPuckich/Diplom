@@ -1,0 +1,36 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+<div class="profile-detail">
+    <div class="info">
+        <a class="edit_prof" href="{% url 'edit-profile' %}">Редактировать</a>
+        <img src="{{ account.profile_image.url }}" alt="">
+        <p>{{ account.name }}</p>
+        <div class="prof">
+            {% if account.prof %}
+            <p>{{ account.prof }}</p>
+            {% endif %}
+            {% if account.prof_info %}
+            <p>{{ account.prof_info }}</p>
+            {% endif %}
+        </div>
+        {% if account.description %}
+        {{ account.description }}
+        {% endif %}
+    </div>
+    <h3>Количество рецептов ({{ account_recipe.count }})</h3>
+    <a class="add_rec" href="{% url 'add_recipe' %}">Добавить рецепт</a>
+    <div class="rec">
+        
+        {% for accr in account_recipe %}
+        <div class="ch_rec">
+            <a href="{%  url 'recipe_detail' accr.id %}">
+                <h4>{{ accr.title }}</h4>
+                <img src="{{ accr.main_image.url }}" alt="">
+            </a>
+            <a href="{% url 'edit-recipe' accr.id %}">Изменить</a>
+            <a href="{% url 'delete-recipe' accr.id %}">Удалить</a>
+        </div>    
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

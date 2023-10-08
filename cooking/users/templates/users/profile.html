@@ -1,0 +1,31 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+<div class="profile-detail">
+    <div class="info">
+        <img src="{{ profile.profile_image.url }}" alt="">
+        <p>{{ profile.name }}</p>
+        <div class="prof">
+            {% if profile.prof %}
+            <p>{{ profile.prof }}</p>
+            {% endif %}
+            {% if profile.prof_info %}
+            <p>{{ profile.prof_info|linebreaksbr }}</p>
+            {% endif %}
+        </div>
+        {% if profile.description %}
+        {{ profile.description }}
+        {% endif %}
+    </div>
+    <h3>Количество рецептов ({{ profile_recipe.count }})</h3>
+    <div class="rec">
+        {% for profr in profile_recipe %}
+        <a href="{%  url 'recipe_detail' profr.id %}">
+            <h4>{{ profr.title }}</h4>
+            <img src="{{ profr.main_image.url }}" alt="">
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

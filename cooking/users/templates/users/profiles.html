@@ -1,0 +1,32 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+<div class="search-block">
+    <form id="search" action="{% url 'users' %}" method="get">
+        <div class="search-field">
+            <label for="formInput#search">Поиск по сайту</label>
+            <input type="text" class="search" name="search_query" placeholder="Поиск..." value="{{ search_query }}">
+        </div>
+        <input type="submit" class="submit" value="Найти">
+    </form>
+</div>
+<div class="profiles">
+    {% for prof in profiles %}
+    <div class="profile">
+        <a class="profs" href="{% url 'users_details' prof.id %}">
+            <img class="avatar" src="{{ prof.profile_image.url }}" alt="">
+            {% if prof.name %}
+            <h3>{{ prof.name }}</h3>
+            {% endif %}
+            {% if prof.prof %}
+            <p>{{ prof.prof|slice:40 }}</p>
+            {% endif %}
+            {% if prof.prof_info %}
+            <p>{{ prof.prof_info|slice:80 }}</p>
+            {% endif %}
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% include 'recipe/paginator.html' with queryset=profiles %}
+{% endblock content %}

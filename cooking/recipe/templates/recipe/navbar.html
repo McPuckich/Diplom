@@ -1,0 +1,22 @@
+{% load static %}
+<header class="nav" >
+    <div class="navbar">
+        <div class="wrap">
+            <div class="navbar_block">
+                <a href="{% url 'home' %}" class="header_logo"><img src="{% static 'images/logo.png' %}" alt=""></a>
+                <ul>
+                    <li class="menu"><a href="{% url 'home' %}">Главная</a></li>
+                    <li class="menu"><a href="{% url 'recipes' %}">Рецепты</a></li>
+                    <li class="menu"><a href="{% url 'users' %}">Пользователи</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li class="menu"><a href="{% url 'add_recipe' %}">Добавить рецепт</a></li>
+                    <li class="menu"><a href="{% url 'profile' %}">Аккаунт</a></li>
+                    <li class="menu"><a href="{% url 'logout_user' %}">Выйти</a></li>
+                    {% else %}
+                    <li class="menu"><a href="{% url 'login_user' %}">Войти</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

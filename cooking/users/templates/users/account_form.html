@@ -1,0 +1,10 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+<h1 class="edit_profile">Редактирование профиля</h1>
+<form class="profile_form" action="{% url 'edit-profile' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit" value="Принять изменения">Принять изменения</button>
+    <a class="back" href="{% url 'profile' %}">Отмена</a>
+</form>
+{% endblock content %}

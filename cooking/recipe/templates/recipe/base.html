@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+{% include 'recipe/navbar.html' %}
+{% if messages %}
+{% for message in messages %}
+<div style="text-align: center">
+    <div class="alert alert--{{ message.tags }}">
+        <p class="alert__message">{{ message }}</p>
+        <button class="alert__close">⨯</button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% block content %}
+
+{% endblock content %}
+<script src="{% static 'js/app.js' %}"></script>
+<script src="{% static 'js/page.js' %}"></script>
+</body>
+</html>

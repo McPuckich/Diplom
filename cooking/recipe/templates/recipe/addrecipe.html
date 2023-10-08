@@ -1,0 +1,26 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+<div class="add_rec">
+    {% if act == 'edit' %}
+    <form class='addrec' action="{% url 'edit-recipe' recipe.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <fieldset>
+    <legend> Рецепт </legend>
+    {{ form.as_p }}
+    </fieldset>
+    <input class="submit" type="submit" value="Сохранить">
+    <a class="back" href="{% url 'profile' %}">Отмена</a>
+    </form>
+    {% else %}
+    <form class='addrec' action="{% url 'add_recipe' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <fieldset>
+    <legend> Рецепт </legend>
+    {{ form.as_p }}
+    </fieldset>
+    <input class="submit" type="submit" value="Сохранить">
+    <a class="back" href="{% url 'recipes' %}">Отмена</a>
+    </form>
+    {% endif %}
+</div>
+{% endblock content %}

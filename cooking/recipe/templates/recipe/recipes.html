@@ -1,0 +1,49 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+
+<div class="search-block">
+    <form id="search" action="{% url 'recipes' %}" method="get">
+        <div class="search-field">
+            <label for="formInput#search">Поиск по сайту</label>
+            <input type="text" class="search" name="search_query" placeholder="Поиск..." value="{{ search_query }}">
+        </div>
+        <input type="submit" class="submit" value="Найти">
+    </form>
+</div>
+{% for recipe in recipes %}
+<div class="recipeblock">
+    <div class="wrap">
+        <div class="recipe_orient">
+            <div class="recipe_left">
+                {% if recipe.main_image %}
+                <img src="{{ recipe.main_image.url }}" alt="" class="recipe" >
+                {% endif %}
+                <p class="recipe-owner"><a class="owner" href="{% url 'users_details' recipe.owner.id %}">{{ recipe.owner.name }}</a></p>
+            </div>
+            <div class="recipe_right">
+                <a href="{% url 'recipe_detail' recipe.id %}">
+                    <div class="recipe">
+                        <div class="recipe_desc">
+                            <h1>{{ recipe.title }}</h1>
+                            {% if recipe.description %}
+                            <p>{{ recipe.description|linebreaksbr|slice:50 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>    
+                    <div class="tags">
+                        {% for tag in recipe.tags.all %}
+                        <p>{{ tag.name }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="marks">
+                        <p>Нравится:{{ recipe.like }} Оценка:{{ recipe.mark }}</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% include 'recipe/paginator.html' with queryset=recipes %}
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'recipe/base.html' %}
+{% block content %}
+
+{% if page == 'register' %}
+<div class="reg_user">
+    <h1>Регистрация</h1>
+    <form action="{% url 'register_user' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input class="reg_user" type="submit" value="Регистрация пользователя">
+    </form>
+    <p>У вас уже есть аккаунт?  <a href="{% url 'login_user' %}">Войти</a></p>
+</div>
+{% else %}
+<div class="log_user">
+    <form action="{% url 'login_user' %}" method="post">
+        {% csrf_token %}
+        <input class="logusn" type="text" name="username" placeholder="Username">
+        <input class="logpas" type="password" name="password" placeholder="Password">
+        <input class="log_btn" type="submit" value="Войти">
+        <p>У вас нет аккаунта?  <a href="{% url 'register_user' %}">Зарегистрироваться</a></p>       
+    </form>
+</div>
+{% endif %}
+{% endblock content %}
